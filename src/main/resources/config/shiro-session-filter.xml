@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sessionfilter>
+	<anons>
+		<pattern>/user/login</pattern>
+		<pattern>/druid/*</pattern>
+		<pattern>/druid</pattern>
+		<pattern>/logout*</pattern>
+	</anons>
+	<authcs>
+		<pattern>/*</pattern>
+		<pattern>/**</pattern>
+		<pattern>/*.*</pattern>
+	</authcs>
+</sessionfilter>
