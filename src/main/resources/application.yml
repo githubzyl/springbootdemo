@@ -1,7 +1,7 @@
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3306/wazddz?characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/wazddz?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true
     username: root
     password: 123456
     #使用druid数据源    
@@ -44,5 +44,13 @@ druid:
     deny: 192.168.1.100
     # 是否能够重置数据
     resetEnable: false
+#最大登陆出错次数
+login:
+  error:
+    retryCount: 1
+    
+#配置日志
+logging:
+  config: classpath:config/logback-spring.xml
     
     

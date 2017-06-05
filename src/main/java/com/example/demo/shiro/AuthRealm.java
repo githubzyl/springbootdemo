@@ -7,7 +7,9 @@ import java.util.Set;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -31,6 +33,14 @@ public class AuthRealm extends AuthorizingRealm {
 		UsernamePasswordToken utoken = (UsernamePasswordToken) token;// 获取用户输入的token
 		String username = utoken.getUsername();
 		User user = userService.findByUserName(username);
+		if(null == user){
+			//用户名不存在（账户未找到）
+			throw new UnknownAccountException();  
+		}
+		if(1 == user.getStatus()){
+			//账户已被锁定
+			throw new LockedAccountException();
+		}
 		// 放入shiro.调用CredentialsMatcher检验密码
 		return new SimpleAuthenticationInfo(user, user.getPassword(), this.getClass().getName());
 	}
@@ -40,7 +50,7 @@ public class AuthRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
 		User user = (User) principal.fromRealm(this.getClass().getName()).iterator().next();// 获取session中的用户
 		List<String> permissions = new ArrayList<>();
-		Set<Role> roles = user.getRoles();
+		Set<Role> roles = userService.getRolesByUserId(user.getId());
 		if (roles.size() > 0) {
 			for (Role role : roles) {
 				Set<Module> modules = role.getModules();

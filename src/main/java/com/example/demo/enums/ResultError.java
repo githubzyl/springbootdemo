@@ -10,6 +10,7 @@ public enum ResultError {
 	SUCCESS("0","成功")
 	,REQUEST_ERROR("1","远程请求错误")
 	,REMOTE_LOGIN_FAIL("2","远程登陆认证失败")
+	,UNKNOW_ERROR("3","未知错误")
 	;
 	
 	private String code;

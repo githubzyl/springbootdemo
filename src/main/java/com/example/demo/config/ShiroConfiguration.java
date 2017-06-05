@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 
 import com.example.demo.shiro.AuthRealm;
 import com.example.demo.shiro.CredentialsMatcher;
+import com.example.demo.shiro.CustomCacheManager;
 import com.example.demo.shiro.MyShiroFilterFactoryBean;
 
 /**
@@ -84,7 +85,7 @@ public class ShiroConfiguration {
 	// 配置自定义的密码比较器
 	@Bean(name = "credentialsMatcher")
 	public CredentialsMatcher credentialsMatcher() {
-		return new CredentialsMatcher();
+		return new CredentialsMatcher(new CustomCacheManager());
 	}
 
 	// 配置自定义的权限登录器
