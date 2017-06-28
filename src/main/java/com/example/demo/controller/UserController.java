@@ -113,7 +113,7 @@ public class UserController {
 		logger.info("数据总页数："+pager.getTotalPage());
 		logger.info("当前页数："+pager.getCurPage());
 		logger.info("每页条数："+pager.getPageSize());
-		data.setTotal(pager.getTotalPage());
+		data.setTotal(pager.getTotalRow());
 		data.setResult(pager.getResult());
 		return data;
 	}

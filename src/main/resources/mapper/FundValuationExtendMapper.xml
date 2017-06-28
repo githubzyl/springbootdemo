@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.FundValuationExtendMapper">
+    
+    <update id="truncateTable">
+        truncate table t_fund_valuation
+    </update>
+    
+    <insert id="insertAndGetId" parameterType="com.example.demo.model.FundValuation" useGeneratedKeys="true" keyProperty="valuationId">
+	    <selectKey keyProperty="valuationId" order="AFTER" resultType="java.lang.Integer">
+	      SELECT LAST_INSERT_ID()
+	    </selectKey>
+	    insert into t_fund_valuation (valuation_id, fund_full_name, valuation_date, 
+            revenue_capital, source_file_name)
+        values (#{valuationId,jdbcType=INTEGER}, #{fundFullName,jdbcType=VARCHAR}, #{valuationDate,jdbcType=DATE}, 
+            #{revenueCapital,jdbcType=DECIMAL}, #{sourceFileName,jdbcType=VARCHAR})
+	  </insert>
+  
+</mapper>

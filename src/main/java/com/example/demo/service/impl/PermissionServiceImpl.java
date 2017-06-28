@@ -9,8 +9,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.mapper.UserExtendMapper;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.mapper.extend.UserExtendMapper;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.model.UserCriteria;
