@@ -1,5 +1,7 @@
 package com.example.demo.calculation;
 
+import org.junit.Test;
+
 /**
  * 一元二次方程模型：ax^2+bx+c=0 以及计算根的方法
  * 
@@ -159,7 +161,8 @@ public class OnceBasicQuadraticEquation {
 		this.secongRoot = secongRoot;
 	}
 
-	public static void main(String[] args) {
+	@Test
+	public void test() {
 		OnceBasicQuadraticEquation equation = new OnceBasicQuadraticEquation(2, -2, 1);
 		System.out.println(equation.isHasRoot());
 		System.out.println(equation.getRootNum());

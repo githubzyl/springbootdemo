@@ -173,9 +173,4 @@ public class HtmlRegexpUtil {
         return sb.toString();   
     }   
     
-    public static void main(String[] args) {
-        System.out.println(HtmlRegexpUtil.filterHtml("<sadasdasdasd></sadasda?>sasad<dsad><SAdasdasd><ddddd      >"));
-    }
-    
-    
 }

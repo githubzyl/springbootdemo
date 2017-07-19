@@ -1,9 +1,7 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -27,13 +25,4 @@ public class MySingleton extends Singleton {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
-		map.put("11", "111222");
-		map.put("22", "222333");
-		map.put("33", "333444");
-		map.forEach((key, value) -> {
-			System.out.println(key + "=" + value);
-		});
-	}
 }

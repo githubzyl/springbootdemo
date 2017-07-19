@@ -19,7 +19,6 @@ import java.util.Random;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTick;
@@ -27,7 +26,6 @@ import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -37,55 +35,63 @@ import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.Week;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
+import org.junit.Test;
 
 import com.example.demo.pdf.CustomXYRenderer;
 import com.example.demo.utils.DateUtils;
 
-public class Test {
+public class TestChart {
 
 	private final static String CHART_FILE_PATH = "F:/ismapp/temp/img/";
 
-	public static void main(String[] args) throws Exception {
-		createTimeSeriesChart();
-		// createXYBarChart();
-		//createBarChart();
-		//createBarChart2();
+	static {
+		File file = new File(CHART_FILE_PATH);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
 	}
-	
-	//周回报率
-	public static void createBarChart2() throws IOException{
+
+	@Test
+	public void testChart() throws Exception {
+		// createTimeSeriesChart();
+		createXYBarChart();
+		// createBarChart();
+		// createBarChart2();
+		
+//		Date date1 = DateUtils.StringToDate("2017-07-12",DateStyle.YYYY_MM_DD);
+//		Date date2 = DateUtils.StringToDate("2017-07-11",DateStyle.YYYY_MM_DD);
+//		Week week1 = new Week(date1);
+//		Week week2 = new Week(date2);
+//		System.out.println(week1.compareTo(week2));
+	}
+
+	// 周回报率
+	public static void createBarChart2() throws IOException {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		Random random = new Random();
-        for (int i = 0; i < 30; i++) {
-            if (i == 0) {
-                dataset.addValue(random.nextInt(100), "",
-                    "<" + random.nextInt(15) + "%");
-            } else if (i == 29) {
-                dataset.addValue(random.nextInt(100), "",
-                		random.nextInt(14) + "%≦");// ≧
-            } else {
-                dataset.addValue(random.nextInt(100), "",
-                		random.nextInt(13) + "%至"
-                            + random.nextInt(12)
-                            + "%");
-            }
-        }
-        ChartFactory.setChartTheme(JFreeChartBaseUtil.chartTheme(null));
-        JFreeChart pieChart = ChartFactory.createBarChart("", "", "累计周数",
-            dataset, PlotOrientation.VERTICAL, true, true, false);
-        pieChart.getLegend().setVisible(false);
-        CategoryPlot plot = (CategoryPlot) pieChart.getPlot();
-        plot.getDomainAxis()
-            .setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-        plot.getDomainAxis().setLowerMargin(0.01);
-        plot.getDomainAxis().setUpperMargin(0.01);
-        
+		for (int i = 0; i < 30; i++) {
+			if (i == 0) {
+				dataset.addValue(random.nextInt(100), "", "<" + random.nextInt(15) + "%");
+			} else if (i == 29) {
+				dataset.addValue(random.nextInt(100), "", random.nextInt(14) + "%≦");// ≧
+			} else {
+				dataset.addValue(random.nextInt(100), "", random.nextInt(13) + "%至" + random.nextInt(12) + "%");
+			}
+		}
+		ChartFactory.setChartTheme(JFreeChartBaseUtil.chartTheme(null));
+		JFreeChart pieChart = ChartFactory.createBarChart("", "", "累计周数", dataset, PlotOrientation.VERTICAL, true, true,
+				false);
+		pieChart.getLegend().setVisible(false);
+		CategoryPlot plot = (CategoryPlot) pieChart.getPlot();
+		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+		plot.getDomainAxis().setLowerMargin(0.01);
+		plot.getDomainAxis().setUpperMargin(0.01);
+
 		int width = 1020; /* Width of the image */
 		int height = 240; /* Height of the image */
 		File xyBarChart = new File(CHART_FILE_PATH + "周回报分析Chart.jpeg");
@@ -94,83 +100,89 @@ public class Test {
 		System.out.println("周回报分析生成成功");
 	}
 
-	//择时能力、避险能力
+	// 择时能力、避险能力
 	public static void createBarChart() throws IOException {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		String chartShowFundName = "证大稳健增长";
-        String chartShowHS300Name = "沪深300";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        
-        Date startDate = DateUtils.addMonth(new Date(), -12);
-        int count = 0;
-        Random random = new Random();
+		String chartShowHS300Name = "沪深300";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		Date startDate = DateUtils.addMonth(new Date(), -12);
+		int count = 0;
+		Random random = new Random();
 		int n = random.nextInt(20);
-        while(!sdf.format(startDate).equals(sdf.format(new Date()))){
-        	if (n % 2 == 0) {
-        		dataset.addValue(new BigDecimal(random.nextInt()),
-                        chartShowFundName, sdf.format(startDate));
-        		dataset.addValue(new BigDecimal(random.nextInt()-100),
-        				chartShowHS300Name, sdf.format(startDate));
-        	}else{
-        		dataset.addValue(new BigDecimal(random.nextInt()+100),
-                        chartShowFundName, sdf.format(startDate));
-        		dataset.addValue(new BigDecimal(random.nextInt()),
-        				chartShowHS300Name, sdf.format(startDate));
-        	}
-        	startDate = DateUtils.addMonth(startDate, 1);
-        	count++;
-        	n++;
-        }
-        
-        System.out.println(count);
-        
-        ChartFactory.setChartTheme(JFreeChartTheme.getStandardChartTheme(true));
-        JFreeChart pieChart = ChartFactory.createBarChart("", "", "", dataset,
-            PlotOrientation.VERTICAL, true, true, false);
-        CategoryPlot plot = (CategoryPlot) pieChart.getPlot();
-        plot.getDomainAxis()
-            .setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-        plot.getDomainAxis().setLowerMargin(0.01);
-        plot.getDomainAxis().setUpperMargin(0.01);
-        BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setBarPainter(new StandardBarPainter());
-        renderer.setItemMargin(-0.1);
-        plot.setRenderer(renderer);// 使用我们设计的效果
-        pieChart.getLegend().setBorder(0, 0, 0, 0);
-        
-        
+		while (!sdf.format(startDate).equals(sdf.format(new Date()))) {
+			if (n % 2 == 0) {
+				dataset.addValue(new BigDecimal(random.nextInt()), chartShowFundName, sdf.format(startDate));
+				dataset.addValue(new BigDecimal(random.nextInt() - 100), chartShowHS300Name, sdf.format(startDate));
+			} else {
+				dataset.addValue(new BigDecimal(random.nextInt() + 100), chartShowFundName, sdf.format(startDate));
+				dataset.addValue(new BigDecimal(random.nextInt()), chartShowHS300Name, sdf.format(startDate));
+			}
+			startDate = DateUtils.addMonth(startDate, 1);
+			count++;
+			n++;
+		}
+
+		System.out.println(count);
+
+		ChartFactory.setChartTheme(JFreeChartTheme.getStandardChartTheme(true));
+		JFreeChart pieChart = ChartFactory.createBarChart("", "", "", dataset, PlotOrientation.VERTICAL, true, true,
+				false);
+		CategoryPlot plot = (CategoryPlot) pieChart.getPlot();
+		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+		plot.getDomainAxis().setLowerMargin(0.01);
+		plot.getDomainAxis().setUpperMargin(0.01);
+		BarRenderer renderer = (BarRenderer) plot.getRenderer();
+		renderer.setBarPainter(new StandardBarPainter());
+		renderer.setItemMargin(-0.1);
+		plot.setRenderer(renderer);// 使用我们设计的效果
+		pieChart.getLegend().setBorder(0, 0, 0, 0);
+
 		int width = 1020; /* Width of the image */
 		int height = 240; /* Height of the image */
 		File xyBarChart = new File(CHART_FILE_PATH + "浮动Chart.jpeg");
 		ChartUtilities.saveChartAsJPEG(xyBarChart, pieChart, width, height);
 
 		System.out.println("浮动图生成成功");
-        
+
 	}
 
-	//每26周
+	// 每26周
 	public static void createXYBarChart() throws IOException {
-		Random random = new Random();
-		int n = random.nextInt(20);
 		TimeSeries timeseries = new TimeSeries("", "", "");
 		Week week = new Week();
-		Date startDate = DateUtils.addMonth(new Date(), -13);
-		week = new Week(startDate);
+//		Date startDate = DateUtils.addMonth(new Date(), -13);
+//		week = new Week(startDate);
 		int count = 0;
-		int number = 0;
+		double number = 0;
 		Map<Integer, Paint> colorMap = new HashMap<>();
-		while (!new Week(new Date()).equals(week)) {
-			if (n % 2 == 0) {
-				number = Integer.parseInt("-" + Math.abs(random.nextInt()));
+		boolean flag = true;
+		while (flag) {
+			number = (0.5 - Math.random()) * 100;
+
+			timeseries.addOrUpdate(week, number);
+
+			if (number > 0) {
 				colorMap.put(count, JFreeChartBaseUtil.COLOR_1);
 			} else {
-				number = random.nextInt();
 				colorMap.put(count, JFreeChartBaseUtil.COLOR_5);
 			}
-			timeseries.addOrUpdate(week, number);
-			week = (Week) week.next();
+
+			week = (Week) week.previous();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(sdf.format(week.getEnd()));
 			count++;
-			n++;
+			
+//			if(new Week(new Date()).equals(week)){
+//				flag = false;
+//			}
+			
+			if(count >= 53){
+				flag = false;
+			}
+			
 		}
 
 		System.out.println(count);
@@ -215,13 +227,13 @@ public class Test {
 		System.out.println("xybar图生成成功");
 	}
 
-	//本基金 vs 沪深300 vs 上证指数 vs 深证成指
+	// 本基金 vs 沪深300 vs 上证指数 vs 深证成指
 	public static void createTimeSeriesChart() throws IOException {
 		final TimeSeries s1 = new TimeSeries("本基金");
 		final TimeSeries s2 = new TimeSeries("沪深300");
 		final TimeSeries s3 = new TimeSeries("上证指数");
 		final TimeSeries s4 = new TimeSeries("深证成指");
-		
+
 		Day day = new Day();
 		Date startDate = DateUtils.addDay(new Date(), -1200);
 		day = new Day(startDate);
@@ -240,20 +252,20 @@ public class Test {
 			day = (Day) day.next();
 			count++;
 		}
-		
+
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(s1);
 		dataset.addSeries(s2);
 		dataset.addSeries(s3);
 		dataset.addSeries(s4);
-		
+
 		TimeSeriesChartView chartView = new TimeSeriesChartView();
 		chartView.setDataset(dataset);
 		chartView.setTheme(JFreeChartTheme.getStandardChartTheme(false));
 		chartView.setLegend(true);
 		chartView.setTooltips(false);
 		chartView.setUrls(false);
-		
+
 		System.out.println(count);
 
 		final JFreeChart timechart = chartView.createJFreeChart();

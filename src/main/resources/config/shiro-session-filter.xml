@@ -6,6 +6,7 @@
 		<pattern>/druid</pattern>
 		<pattern>/logout*</pattern>
 		<pattern>/list</pattern>
+		<pattern>/redis/*</pattern>
 	</anons>
 	<authcs>
 		<pattern>/*</pattern>

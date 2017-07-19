@@ -1,11 +1,12 @@
 package com.example.demo.pdf.itext;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.junit.Test;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -17,7 +18,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
-public class Test1 {
+public class TestItext {
 
 	public static void htmlToPdf() throws DocumentException, IOException {
 		String url = "C:/Users/hspcadmin/Desktop/product_report.html";
@@ -60,7 +61,8 @@ public class Test1 {
 		writer.close();
 	}
 
-	public static void main(String[] args) throws DocumentException, IOException {
+	@Test
+	public void test() throws DocumentException, IOException {
 		htmlToPdf();
 	}
 

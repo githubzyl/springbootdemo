@@ -49,6 +49,7 @@ import org.jfree.data.time.Week;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
+import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.jfreechart.JFreeChartBaseUtil;
@@ -989,7 +990,8 @@ public class ChartViewNewServiceImpl extends BaseService
 		return new FundCoreBean();
 	}
 	
-	public static void main(String[] args) {
+	@Test
+	public void testPdf() {
 		ChartViewNewServiceImpl impl = new ChartViewNewServiceImpl();
 		try {
 			String str = impl.htmlConvertToPdf(null);

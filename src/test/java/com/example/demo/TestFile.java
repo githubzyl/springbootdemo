@@ -9,15 +9,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Test {
+import org.junit.Test;
 
-	public static void main(String[] args) throws Exception {
+public class TestFile {
+
+	@Test
+	public void test() throws Exception {
 		String filePath = "F:\\ismapp\\temp\\img\\4DAB07B20FD924B834D8802514DDAE76.jpg";
 		// getCreateTime(filePath);
 		// getModifiedTime(filePath);
 		//File file = new File("F:/ismapp/temp");
 		//removeFiles(file, 30);
-		test32("2*60*60*1000");
+//		test32("2*60*60*1000");
+		for(int i = 0 ; i < 10 ; i++){
+			System.out.println((0.5-Math.random())*100);
+		}
 	}
 
 	public static void removeFiles(File file, long expiration) {
